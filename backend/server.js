@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectDB } from "./libs/db.js";
+import { connectDB } from "./src/libs/db.js";
 //import authRoute from "./routes/authRoute.js";
 //import userRoute from "./routes/userRoute.js";
-import friendRoute from "./routes/friendRoute.js";
+import friendRoute from "./src/routes/friendRoute.js";
 //import messageRoute from "./routes/messageRoute.js";
 //import conversationRoute from "./routes/conversationRoute.js";
 import cookieParser from "cookie-parser";
@@ -16,7 +16,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
 
-// const app = express();
+const app = express();
 const PORT = process.env.PORT || 5001;
 
 // middlewares
@@ -32,19 +32,21 @@ cloudinary.config({
 });
 
 // swagger
-const swaggerDocument = JSON.parse(fs.readFileSync("./src/swagger.json", "utf8"));
+// const swaggerDocument = JSON.parse(
+//   fs.readFileSync("./src/swagger.json", "utf8"),
+// );
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // public routes
-app.use("/api/auth", authRoute);
+// app.use("/api/auth", authRoute);
 
 // private routes
-app.use(protectedRoute);
-app.use("/api/users", userRoute);
+// app.use(protectedRoute);
+// app.use("/api/users", userRoute);
 app.use("/api/friends", friendRoute);
-app.use("/api/messages", messageRoute);
-app.use("/api/conversations", conversationRoute);
+// app.use("/api/messages", messageRoute);
+// app.use("/api/conversations", conversationRoute);
 
 connectDB().then(() => {
   server.listen(PORT, () => {
